@@ -1,0 +1,26 @@
+---
+- name: creating groups needed to run keystone
+  group: name=keystone state=present
+
+- name: creating users needed to run keystone
+  user: name=keystone shell=/bin/false group=keystone home=/var/lib/keystone
+
+- name: manual disable keystone from starting
+  lineinfile: dest=/etc/init/keystone.override regexp=manual line='manual' state=present create=yes 
+
+- name: install openstack software packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - keystone
+  - python-openstackclient
+  - apache2
+  - libapache2-mod-wsgi
+  - memcached
+  - python-memcache
+
+- name: creating log directories 
+  file: path=/var/log/keystone state=directory owner=keystone group=keystone
+
+- name: changing config ownership for /etc/keystone
+  file: path=/etc/keystone owner=keystone group=keystone state=directory recurse=yes
+

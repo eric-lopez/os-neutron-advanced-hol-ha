@@ -1,0 +1,22 @@
+---
+- name: create group
+  group: name=glance state=present
+
+- name: create user
+  user: name=glance shell=/bin/false group=glance home=/var/lib/glance
+
+- name: run apt-get update
+  apt: update_cache=yes
+  ignore_errors: yes
+
+- name: install openstack glance software packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - glance 
+  - python-glanceclient
+
+- name: change owner:group for /etc/glance
+  file: path=/etc/glance owner=glance group=glance state=directory recurse=yes
+
+- name: remove SQLite database
+  file: src=/var/lib/glance/glance.sqlite state=absent

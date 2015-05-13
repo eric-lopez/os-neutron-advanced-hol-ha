@@ -1,0 +1,46 @@
+- name: add HAProxy repo
+  apt_repository: repo='ppa:vbernat/haproxy-1.5'
+
+- name: run apt-get update
+  apt: update_cache=yes
+  ignore_errors: yes
+
+- name: install lb components
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - haproxy
+  - keepalived
+  - socat
+
+- name: allow binding to nonlocal IPs
+  lineinfile: dest=/etc/sysctl.conf line="net.ipv4.ip_nonlocal_bind = 1"
+
+- name: load settings from /etc/sysctl.conf
+  command: sysctl -p
+
+- name: enable HAProxy
+  lineinfile: dest=/etc/default/haproxy regexp='ENABLED=0' line='ENABLED=1' backrefs=yes
+
+- name: copy check_haproxy.sh
+  copy: src=lbscripts dest=/usr/local/bin/ mode=755
+
+- name: copy openstack neutron lab pem
+  copy: src=os-neutron-lab.pem dest=/etc/ssl/os-neutron-lab.pem
+
+- name: set up logrotate for haproxy
+  copy: src=haproxy dest=/etc/logrotate.d/haproxy
+
+- name: set HAProxy to log to /var/log/haproxy instead of /var/log
+  copy: src=haproxy.conf dest=/etc/rsyslog.d/haproxy.conf
+
+- name: enable UDP server in rsyslog
+  lineinfile: dest=/etc/rsyslog.conf regexp='^#\$ModLoad imudp' backrefs=yes line='$ModLoad imudp' state=present
+
+- name: configure rsyslog to start UDP server on port 514
+  lineinfile: dest=/etc/rsyslog.conf regexp='^#\$UDPServerRun 514' backrefs=yes line='$UDPServerRun 514' state=present
+
+- name: configure rsyslog to start UDP server on 127.0.0.1
+  lineinfile: dest=/etc/rsyslog.conf insertafter="^\$UDPServerRun 514" line="$UDPServerAddress 127.0.0.1" state=present
+
+- name: restart rsyslog
+  service: name=rsyslog state=restarted

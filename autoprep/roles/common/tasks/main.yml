@@ -1,0 +1,35 @@
+- name: create /etc/apt/apt.conf
+  command: touch /etc/apt/apt.conf
+
+- name:  add 'APT{Ignore {"gpg-pubkey"; }};' to /etc/apt/apt.conf
+  lineinfile: dest=/etc/apt/apt.conf line='APT{Ignore {"gpg-pubkey"; }};'
+
+- name: add 'APT { Get { AllowUnauthenticated "1"; }; };' to /etc/apt/apt.conf
+  lineinfile: dest=/etc/apt/apt.conf line='APT { Get { AllowUnauthenticated "1"; }; };'
+
+- name: run apt-get update
+  apt: update_cache=yes
+  ignore_errors: yes
+
+- name: run apt-get upgrade
+  apt: upgrade=dist
+
+- name: install packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - ntp
+
+- name: fix boot startup
+  lineinfile: dest=/etc/default/rcS regexp='FSCKFIX' line=FSCKFIX=yes
+
+- name: allow root ssh
+  lineinfile: dest=/etc/ssh/sshd_config regexp='PermitRootLogin' line='PermitRootLogin yes'
+
+- name: fix grub tab
+  lineinfile: dest=/etc/default/grub regexp='^GRUB_RECORDFAIL_TIMEOUT' line='GRUB_RECORDFAIL_TIMEOUT=2'
+
+- name: update grub tab
+  command: /usr/sbin/update-grub
+
+- name: disable reverse dns lookup in ssh
+  lineinfile: dest=/etc/ssh/sshd_config regexp='UseDNS' line='UseDNS no'

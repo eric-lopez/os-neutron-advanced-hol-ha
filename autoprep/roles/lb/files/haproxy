@@ -1,0 +1,10 @@
+/var/log/haproxy/haproxy.log    {
+	daily
+	missingok
+	compress
+	delaycompress
+	notifempty
+	postrotate
+	invoke-rc.d rsyslog reload >/dev/null 2>&1 || true
+	endscript
+}

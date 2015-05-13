@@ -1,0 +1,18 @@
+---
+- name: create group
+  group: name=horizon state=present
+
+- name: create user
+  user: name=horizon shell=/bin/false group=horizon home=/var/lib/horizon
+
+- name: create /etc/openstack-dashboard
+  file: path=/etc/openstack-dashboard state=directory owner=horizon group=horizon
+
+- name: run apt-get update
+  apt: update_cache=yes
+  ignore_errors: yes
+
+- name: install openstack horizon software packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - openstack-dashboard

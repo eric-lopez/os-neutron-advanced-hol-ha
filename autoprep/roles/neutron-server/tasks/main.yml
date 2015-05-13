@@ -1,0 +1,23 @@
+---
+- name: create group
+  group: name=neutron state=present
+
+- name: create user
+  user: name=neutron shell=/bin/false group=neutron home=/var/lib/neutron
+
+- name: change owner:group for /etc/neutron
+  file: path=/etc/neutron owner=neutron group=neutron state=directory recurse=yes
+
+- name: run apt-get update
+  apt: update_cache=yes
+  ignore_errors: yes
+
+- name: install openstack neutron software packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - neutron-server 
+  - neutron-plugin-ml2 
+  - python-neutronclient
+
+- name: change permissions on neutron_sudoers
+  file: path=/etc/sudoers.d/neutron_sudoers mode=0440

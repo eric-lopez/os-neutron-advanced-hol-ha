@@ -1,0 +1,12 @@
+- name: run apt-get update
+  apt: update_cache=yes
+  ignore_errors: yes
+
+- name: run apt-get upgrade
+  apt: upgrade=dist
+
+- name: install MariaDB 
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - mariadb-server 
+  - python-mysqldb

@@ -1,0 +1,27 @@
+---
+- name: create group
+  group: name=nova state=present
+
+- name: create user
+  user: name=nova shell=/bin/false group=nova home=/var/lib/nova
+
+- name: run apt-get update
+  apt: update_cache=yes
+  ignore_errors: yes
+
+- name: install openstack nova software packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - nova-api
+  - nova-cert
+  - nova-conductor
+  - nova-consoleauth
+  - nova-novncproxy 
+  - nova-scheduler 
+  - python-novaclient
+
+- name: change owner:group for /etc/nova
+  file: path=/etc/nova owner=nova group=nova state=directory recurse=yes
+
+- name: remove SQLite database
+  file: src=/var/lib/nova/nova.sqlite state=absent

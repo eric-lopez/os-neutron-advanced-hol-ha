@@ -1,0 +1,15 @@
+---
+- hosts: controller
+  remote_user: vmware
+  sudo: true 
+
+  vars_files:
+    - answer_file.yml
+
+  roles:
+    - common
+    - common-openstack
+    - glance
+    - keystone
+    - nova
+    - openstack-dashboard

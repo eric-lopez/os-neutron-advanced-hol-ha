@@ -10,5 +10,14 @@
 - name: copy authenication_key for lab-desktop
   copy: src=authorized_keys dest=/root/.ssh/authorized_keys mode=0600
 
-- name: set hostname of node
+- name: set hostname in hostname file 
   template: src=hostname dest=/etc/hostname
+
+- name: set hostname of node 
+  command: hostname {{ node_host_name }}
+
+- name: run apt-get upgrade
+  apt: upgrade=dist 
+
+- name: reboot system
+  command: reboot now

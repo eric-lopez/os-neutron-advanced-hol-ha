@@ -1,0 +1,19 @@
+[compute]
+10.127.1.80 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=compute01
+10.127.1.81 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=compute01
+
+[controller]
+10.127.1.41 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=controller01
+10.127.1.42 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=controller02
+
+[network]
+10.127.1.43 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=network01
+10.127.1.45 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=network02
+
+[lb]
+10.127.1.47 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=lb01
+10.127.1.48 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=lb02
+
+[sql]
+10.127.1.49 ansible_ssh_user='vmware' ansible_sudo_pass='vmware123' ansible_ssh_pass='vmware123' node_host_name=sql01
+

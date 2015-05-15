@@ -1,0 +1,14 @@
+- name: setup DNS in HOL
+  copy: src=resolv.conf dest=/etc/resolv.conf
+
+- name: disable DHClient for request DNS info
+  copy: src=dhclient.conf dest=/etc/dhcp/dhclient.conf 
+
+- name: add DNS into resolvconf base
+  copy: src=resolv.conf.base dest=/etc/resolvconf/resolv.conf.d/base
+
+- name: copy authenication_key for lab-desktop
+  copy: src=authorized_keys dest=/root/.ssh/authorized_keys mode=0600
+
+- name: set hostname of node
+  template: src=hostname dest=/etc/hostname

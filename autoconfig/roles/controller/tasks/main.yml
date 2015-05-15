@@ -1,0 +1,5 @@
+- include: keystone.yml
+- include: apache2.yml
+- include: config-openstack-service.yml
+- include: glance.yml
+- include: nova.yml

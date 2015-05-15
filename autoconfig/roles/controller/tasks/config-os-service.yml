@@ -1,0 +1,6 @@
+- name: create service tenant
+  keystone_user: 
+    endpoint: "{{ keystone_admin_url }}"
+    token: "{{ keystone_admin_token }}" 
+    tenant: service 
+    tenant_description: "Service Tenant"

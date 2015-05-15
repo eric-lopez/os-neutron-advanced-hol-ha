@@ -1,0 +1,8 @@
+- name: Configure nova
+  template: src=etc/nova/nova.conf.j2 dest=/etc/nova/nova.conf
+
+- name: Restart Nova Services
+  service: name=nova-compute state=restarted
+
+- name: remove SQLite DB
+  file: path=/var/lib/nova/nova.sqlite state=absent

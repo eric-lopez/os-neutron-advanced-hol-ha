@@ -1,0 +1,4 @@
+- include: config-os-service.yml
+- include: config-os-keystone.yml
+- include: config-os-glance.yml
+- include: config-os-nova.yml

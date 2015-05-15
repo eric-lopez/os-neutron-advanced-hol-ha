@@ -1,0 +1,11 @@
+---
+- hosts: compute
+  remote_user: vmware
+  sudo: yes
+
+  vars_files:
+    - answer_file.yml
+ 
+  roles:
+    - common
+    - compute

@@ -1,0 +1,29 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address {{ ansible_eth0.ipv4.address }}
+netmask {{ ansible_eth0.ipv4.netmask }}
+
+
+auto eth1
+iface eth1 inet static
+address {{ ansible_eth1.ipv4.address }}
+netmask {{ ansible_eth1.ipv4.netmask }}
+
+dns-nameservers {{ dnsServer1 }} {{ dnsServer2 }}
+dns-domain  {{ dnsDomain }}
+
+ 
+up ip rule add from {{ ansible_eth0.ipv4.address }} table eth0
+up ip rule add from {{ internalVIP  }}  table eth0
+up ip route add default via  {{ InternalGW  }}  dev eth0 table eth0
+
+up ip rule add from {{ ansible_eth1.ipv4.address  }} table eth1
+up ip rule add from {{ publicVIP }} table eth1
+up ip route add default via {{ PublicGW }}  dev eth1 table eth1

@@ -1,0 +1,11 @@
+---
+- hosts: controller
+  remote_user: vmware
+  sudo: true 
+
+  vars_files:
+    - answer_file.yml
+
+  roles:
+    - common
+    - controller

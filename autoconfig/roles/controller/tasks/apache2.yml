@@ -1,0 +1,24 @@
+- name: configure apache
+  template: src=etc/apache2/apache2.j2 dest=/etc/apache2/apache2.conf 
+
+- name: setup keystone wsgi service
+  file: src=wsgi-keystone.conf dest=/etc/apache2/sites-available/wsgi-keystone.conf 
+
+- name: disable default virtual host
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+- name: Enable keystone service
+  file: src=/etc/apache2/sites-available/wsgi-keystone.conf dest=/etc/apache2/sites-enabled/wsgi-keystone.conf state=link
+
+- name: Create directory for WSGI components
+  file: path=/var/www/cgi-bin/keystone state=directory
+
+- name: Install WSGI components
+  copy: src=var/www/cgi-bin/keystone/stub dest=/var/www/cgi-bin/keystone/admin
+  copy: src=var/www/cgi-bin/keystone/stub dest=/var/www/cgi-bin/keystone/main
+
+- name: Adjust ownership
+  file: path=/var/www/cgi-bin/keystone/admin owner={{ keystone_user }} group={{keystone_group }} mode=0755 
+
+- name: restart apache
+  service: name=apache2 state=restarted

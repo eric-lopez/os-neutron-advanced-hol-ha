@@ -1,0 +1,24 @@
+---
+- name: restart keepalived
+  service: 
+    name: keepalived
+    state: restarted
+    enabled: yes
+
+- name: restart mysql
+  service: 
+    name: mysql
+    state: restarted
+    enabled: yes
+
+- name: restart apache2
+  service: 
+    name: apache2
+    state: restarted
+    enabled: yes
+
+- name: restart haproxy
+  service: 
+    name: haproxy
+    state: restarted
+    enabled: yes

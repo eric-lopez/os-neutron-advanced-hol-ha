@@ -1,0 +1,35 @@
+- name: Create DB for service
+  mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ glance_database }}"
+    state: "present"
+
+- name: Grant access to the DB for the service
+  mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ glance_user }}"
+    password: "{{ glance_db_password }}"
+    host: "{{ item }}"
+    state: "present"
+    priv: "{{ glance_database }}.*:ALL"
+  with_items:
+    - "localhost"
+    - "%"
+
+- name: Configure glance
+  template: src=etc/glance/glance-api.conf.j2 dest=/etc/glance/glance-api.conf
+  template: src=etc/glance/glance-registry.conf.j2 dest=/etc/glance/glance-registry.conf
+
+- name: Perform a glance DB sync
+  command: glance-manage db_sync
+
+- name: Restart Image Services
+  service: name=glance-registry state=restarted
+  service: name=glance-api state=restarted
+
+- name: remove SQLite DB
+  file: path=/var/lib/glance/glance.sqlite state=absent

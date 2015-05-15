@@ -1,0 +1,27 @@
+- name: create nova user in keystone
+  keystone_user: 
+    endpoint: "{{ keystone_admin_url }}"
+    token: "{{ keystone_admin_token }}" 
+    tenant: service 
+    user: nova 
+    password: "{{ nova_user_password }}"
+
+- name: add nova user to the service tenant with the admin role
+  keystone_user: 
+    endpoint: "{{ keystone_admin_url }}"
+    token: "{{ keystone_admin_token }}" 
+    tenant: service 
+    user: nova 
+    role: admin
+
+- name: add nova endpoint
+  keystone_service: 
+    endpoint: "{{ keystone_admin_url }}"
+    token: "{{ keystone_admin_token }}"
+    region: "{{ openstack_region }}"
+    name: nova
+    type: compute
+    description: Compute Service
+    public_url: "{{ nova_public_url }}"
+    internal_url: "{{ nova_internal_url }}"
+    admin_url: "{{ nova_admin_url }}"

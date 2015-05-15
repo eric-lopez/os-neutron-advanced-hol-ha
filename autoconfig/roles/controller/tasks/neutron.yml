@@ -1,0 +1,30 @@
+- name: Create DB for service
+  mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ keystone_database }}"
+    state: "present"
+
+- name: Grant access to the DB for the service
+  mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ keystone_user }}"
+    password: "{{ keystone_db_password }}"
+    host: "{{ item }}"
+    state: "present"
+    priv: "{{ keystone_database }}.*:ALL"
+  with_items:
+    - "localhost"
+    - "%"
+
+- name: Configure keystone
+  template: src=etc/keystone/keystone.conf.j2 dest=/etc/keystone/keystone.conf
+
+- name: Perform a Keystone DB sync
+  command: keystone-manage db_sync
+
+- name: remove SQLite DB
+  file: path=/var/lib/keystone/keystone.db state=absent

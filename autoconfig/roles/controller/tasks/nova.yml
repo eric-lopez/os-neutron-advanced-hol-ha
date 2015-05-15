@@ -1,0 +1,38 @@
+- name: Create DB for service
+  mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ nova_database }}"
+    state: "present"
+
+- name: Grant access to the DB for the service
+  mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ nova_user }}"
+    password: "{{ nova_db_password }}"
+    host: "{{ item }}"
+    state: "present"
+    priv: "{{ nova_database }}.*:ALL"
+  with_items:
+    - "localhost"
+    - "%"
+
+- name: Configure nova
+  template: src=etc/nova/nova.conf.j2 dest=/etc/nova/nova.conf
+
+- name: Perform a Keystone DB sync
+  command: nova-manage db_sync
+
+- name: Restart Nova Services
+  service: name=nova-api state=restarted
+  service: name=nova-cert state=restarted
+  service: name=nova-consoleauth state=restarted
+  service: name=nova-scheduler state=restarted
+  service: name=nova-conductor state=restarted
+  service: name=nova-novncproxy state=restarted
+
+- name: remove SQLite DB
+  file: path=/var/lib/nova/nova.sqlite state=absent

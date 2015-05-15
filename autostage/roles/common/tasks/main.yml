@@ -7,6 +7,9 @@
 - name: add DNS into resolvconf base
   copy: src=resolv.conf.base dest=/etc/resolvconf/resolv.conf.d/base
 
+- name: add .ssh directory for root
+  file: path=/root/.ssh state=directory mode=0600 
+
 - name: copy authenication_key for lab-desktop
   copy: src=authorized_keys dest=/root/.ssh/authorized_keys mode=0600
 

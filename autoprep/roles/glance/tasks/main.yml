@@ -19,4 +19,4 @@
   file: path=/etc/glance owner=glance group=glance state=directory recurse=yes
 
 - name: remove SQLite database
-  file: src=/var/lib/glance/glance.sqlite state=absent
+  file: path=/var/lib/glance/glance.sqlite state=absent

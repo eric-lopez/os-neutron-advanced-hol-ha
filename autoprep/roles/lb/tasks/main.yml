@@ -22,7 +22,7 @@
   lineinfile: dest=/etc/default/haproxy regexp='ENABLED=0' line='ENABLED=1' backrefs=yes
 
 - name: copy check_haproxy.sh
-  copy: src=lbscripts dest=/usr/local/bin/ mode=755
+  copy: src=scripts/check_haproxy.sh  dest=/usr/local/bin/check_haproxy.sh mode=755
 
 - name: copy openstack neutron lab pem
   copy: src=os-neutron-lab.pem dest=/etc/ssl/os-neutron-lab.pem

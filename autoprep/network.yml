@@ -9,8 +9,4 @@
   roles:
     - common
     - common-openstack
-    - neutron-server
-    - neutron-dhcp
-    - neutron-lbaas
-    - neutron-l3
-    - neutron-metadata
+    - neutron

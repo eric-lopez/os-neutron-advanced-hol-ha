@@ -11,7 +11,7 @@
   copy: src=authorized_keys dest=/root/.ssh/authorized_keys mode=0600
 
 - name: set hostname in hostname file 
-  template: src=hostname dest=/etc/hostname
+  template: src=etc/hostname.j2 dest=/etc/hostname
 
 - name: set hostname of node 
   command: hostname {{ node_host_name }}

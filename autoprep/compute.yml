@@ -9,4 +9,4 @@
   roles:
     - common
     - common-openstack
-    - nova-compute
+    - compute

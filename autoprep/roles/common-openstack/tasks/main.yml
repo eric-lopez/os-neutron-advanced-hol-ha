@@ -1,5 +1,5 @@
 - name: install cloud archive kilo release
-  apt_repository: repo:'cloud-archive:kilo'
+  apt_repository: repo='deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main'
 
 - name: run apt-get update
   apt: update_cache=yes

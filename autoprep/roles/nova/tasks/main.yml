@@ -24,4 +24,4 @@
   file: path=/etc/nova owner=nova group=nova state=directory recurse=yes
 
 - name: remove SQLite database
-  file: src=/var/lib/nova/nova.sqlite state=absent
+  file: path=/var/lib/nova/nova.sqlite state=absent

@@ -20,7 +20,7 @@
   command: hostname {{ node_host_name }}
 
 - name: run apt-get upgrade
-  apt: upgrade=dist update_cache
+  apt: upgrade=dist update_cache=yes
 
 - name: reboot system
   command: reboot now

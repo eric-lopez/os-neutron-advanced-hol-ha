@@ -9,12 +9,14 @@
   apt: update_cache=yes
   ignore_errors: yes
 
-- name: install openstack glance software packages
+- name: install openstack software packages
   apt: pkg={{ item }} state=latest
   with_items:
   - nova-compute
   - sysfsutils
   - dkms
+  - neutron-plugin-ml2 
+  - neutron-plugin-openvswitch-agent
 
 - name: change owner:group for /etc/nova
   file: path=/etc/nova owner=nova group=nova state=directory recurse=yes

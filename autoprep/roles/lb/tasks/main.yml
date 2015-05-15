@@ -43,4 +43,4 @@
   lineinfile: dest=/etc/rsyslog.conf insertafter="^\$UDPServerRun 514" line="$UDPServerAddress 127.0.0.1" state=present
 
 - name: restart rsyslog
-  service: name=rsyslog state=restarted
+  service: name=rsyslog state=started enabled=yes

@@ -1,11 +1,8 @@
-- name: download RabbitMQ repository key
-  command: wget https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-
-- name: install RabbitMQ repository key
-  command: apt-key add rabbitmq-signing-key-public.asc
+- name: download and RabbitMQ repository key
+  apt_key: url=https://www.rabbitmq.com/rabbitmq-signing-key-public.asc state=present validate_certs=no
 
 - name: add RabbitMQ repository 
-  lineinfile: dest=/etc/apt/sources.list.d/rabbitmq.list line='deb http://www.rabbitmq.com/debian/ testing main' state=present create=yes
+  apt_repository: repo='deb http://www.rabbitmq.com/debian/ testing main' state=present update_cache=yes
 
 - name: run apt-get update
   apt: update_cache=yes

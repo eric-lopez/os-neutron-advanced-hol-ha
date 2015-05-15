@@ -13,7 +13,6 @@
   apt: pkg={{ item }} state=latest
   with_items:
   - nova-compute
-  - neutron-plugin-openvswitch-agent
   - sysfsutils
   - dkms
 

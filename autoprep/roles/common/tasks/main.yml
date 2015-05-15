@@ -1,12 +1,3 @@
-- name: create /etc/apt/apt.conf
-  command: touch /etc/apt/apt.conf
-
-- name:  add 'APT{Ignore {"gpg-pubkey"; }};' to /etc/apt/apt.conf
-  lineinfile: dest=/etc/apt/apt.conf line='APT{Ignore {"gpg-pubkey"; }};'
-
-- name: add 'APT { Get { AllowUnauthenticated "1"; }; };' to /etc/apt/apt.conf
-  lineinfile: dest=/etc/apt/apt.conf line='APT { Get { AllowUnauthenticated "1"; }; };'
-
 - name: run apt-get update
   apt: update_cache=yes
   ignore_errors: yes
@@ -18,6 +9,12 @@
   apt: pkg={{ item }} state=latest
   with_items:
     - ntp
+
+- name: configure NTP
+  copy: src=ntp.conf dest=/etc/ntp.conf 
+
+- name: remove ntp.conf.dhcp
+  file: path=/var/lib/ntp/ntp.conf.dhcp state=absent
 
 - name: fix boot startup
   lineinfile: dest=/etc/default/rcS regexp='FSCKFIX' line=FSCKFIX=yes
@@ -33,3 +30,6 @@
 
 - name: disable reverse dns lookup in ssh
   lineinfile: dest=/etc/ssh/sshd_config regexp='UseDNS' line='UseDNS no'
+
+- name: restart NTP
+  command: service ntp restart

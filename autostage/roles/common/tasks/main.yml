@@ -16,6 +16,9 @@
 - name: set hostname in hostname file 
   template: src=etc/hostname.j2 dest=/etc/hostname
 
+- name: copy hosts for environment
+  template: src=etc/hosts.j2 dest=/etc/hosts
+
 - name: set hostname of node 
   command: hostname {{ node_host_name }}
 

@@ -1,0 +1,30 @@
+127.0.0.1	localhost
+127.0.1.1	{{ node_host_name }}
+
+10.127.1.60	lab-desktop 	jumphost
+
+#Hypervisors
+10.127.1.80 	compute01 	Openstack-Compute01 	kvm-compute01 	kvm-compute1
+10.127.1.81 	compute02 	Openstack-Compute02 	kvm-compute02 	kvm-compute2
+
+#Openstack
+10.127.1.41 	controller01 	Openstack-Cloud-Controller01 	Openstack-Controller01
+10.127.1.42 	controller02 	Openstack-Cloud-Controller02 	Openstack-Controller02
+10.127.1.43 	network01 	Openstack-Network-Node01 	Openstack-Network01
+10.127.1.45 	network02 	Openstack-Network-Node02 	Openstack-Network02
+10.127.1.49	sql01		Openstack-Database01 		Openstack-sql01
+
+#Infrastructure LB
+10.127.1.47	lb01
+10.127.1.48	lb02
+
+#Openstack Controller VIP
+10.127.1.40	internalVIP 	controller-internal
+10.254.1.40	publicVIP 	controller-public
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters

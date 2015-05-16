@@ -23,7 +23,7 @@
     token: "{{ keystone_admin_token }}" 
     tenant: admin
     user: admin 
-    password: "{{ admin_password }}"
+    password: "{{ tenant_admin_password }}"
 
 - name: create admin role and associate it with admin user
   keystone_user: 

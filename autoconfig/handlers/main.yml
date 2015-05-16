@@ -22,3 +22,9 @@
     name: haproxy
     state: restarted
     enabled: yes
+
+- name: restart networking
+  service: 
+    name: networking
+    state: restarted
+    enabled: yes

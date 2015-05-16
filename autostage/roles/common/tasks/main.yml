@@ -22,6 +22,9 @@
 - name: set hostname of node 
   command: hostname {{ node_host_name }}
 
+- name: configure interface file for multiple interfaces
+  template: src=etc/network/interfaces.j2 dest=/etc/network/interfaces
+
 - name: run apt-get upgrade
   apt: upgrade=dist update_cache=yes
 

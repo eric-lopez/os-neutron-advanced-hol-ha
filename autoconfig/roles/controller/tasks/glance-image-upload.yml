@@ -1,2 +1,0 @@
-- name: Upload Cirros image into glance
-  command: 

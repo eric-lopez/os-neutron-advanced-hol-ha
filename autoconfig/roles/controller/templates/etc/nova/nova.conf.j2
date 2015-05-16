@@ -26,8 +26,8 @@ rabbit_password = {{ rabbit_password }}
 connection = mysql://{{ nova_user }}:{{ nova_db_password }}@{{ mysql_address }}/{{ nova_database }}
 
 [keystone_authtoken]
-auth_uri = http://{{ InternalVIP }}:5000
-auth_url = http://{{ InternalVIP }}:35357
+auth_uri = http://{{ internalVIP }}:5000
+auth_url = http://{{ internalVIP }}:35357
 auth_plugin = password
 project_domain_id = default
 user_domain_id = default
@@ -36,7 +36,7 @@ username = {{ nova_user }}
 password = {{ nova_user_password }}
 
 [glance]
-host = {{ InternalVIP }}
+host = {{ internalVIP }}
 
 [oslo_concurrency]
 lock_path = /var/lock/nova

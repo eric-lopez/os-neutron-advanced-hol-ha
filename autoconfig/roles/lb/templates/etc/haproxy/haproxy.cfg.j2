@@ -32,7 +32,7 @@ listen keystone
         option  httplog
         fullconn 1024
         server {{ controller01hostName }} {{ controller01InternalIP }}:5000 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:5000 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:5000 check inter 3000
 
 listen keystone-admin
         bind {{ internalVIP }}:35357
@@ -41,7 +41,7 @@ listen keystone-admin
         option http-server-close
         fullconn 1024
         server {{ controller01hostName }} {{ controller01InternalIP }}:35357 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:35357 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:35357 check inter 3000
 
 listen glance-api
         bind {{ internalVIP }}:9292
@@ -51,7 +51,7 @@ listen glance-api
         option http-server-close
         fullconn 1024
         server {{ controller01hostName }} {{ controller01InternalIP }}:9292 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:9292 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:9292 check inter 3000
 
 listen glance-registry
         bind {{ internalVIP }}:9191
@@ -60,7 +60,7 @@ listen glance-registry
         option http-server-close
         fullconn 1024 
         server {{ controller01hostName }} {{ controller01InternalIP }}:9191 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:9191 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:9191 check inter 3000
 
 listen nova-compute-api
         bind {{ internalVIP }}:8774 
@@ -70,7 +70,7 @@ listen nova-compute-api
         option http-server-close
         fullconn 1024
         server {{ controller01hostName }} {{ controller01InternalIP }}:8774 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:8774 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:8774 check inter 3000
 
 listen nova-metadata
         bind {{ internalVIP }}:8775
@@ -79,7 +79,7 @@ listen nova-metadata
         option http-server-close
         fullconn 1024
         server {{ controller01hostName }} {{ controller01InternalIP }}:8775 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:8775 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:8775 check inter 3000
 
 listen novncproxy
         bind {{ publicVIP }}:6080 ssl crt /etc/ssl/os-neutron-lab
@@ -88,7 +88,7 @@ listen novncproxy
         option http-server-close
         fullconn 1024
         server {{ controller01hostName }} {{ controller01InternalIP }}:6080 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:6080 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:6080 check inter 3000
 
 listen horizon
         bind {{ publicVIP }}:80
@@ -99,7 +99,7 @@ listen horizon
         option http-server-close
         fullconn 1024
         server {{ controller01hostName }} {{ controller01InternalIP }}:80 check inter 3000
-        server {{ controller02hostName }} {{ controller02InternalIPP }}:80 check inter 3000
+        server {{ controller02hostName }} {{ controller02InternalIP }}:80 check inter 3000
 
 listen web 0.0.0.0:8080
     mode http

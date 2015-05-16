@@ -1,5 +1,5 @@
 - name: configure apache
-  template: src=etc/apache2/apache2.j2 dest=/etc/apache2/apache2.conf 
+  template: src=etc/apache2/apache2.conf.j2 dest=/etc/apache2/apache2.conf 
 
 - name: setup keystone wsgi service
   file: src=wsgi-keystone.conf dest=/etc/apache2/sites-available/wsgi-keystone.conf 
@@ -14,8 +14,8 @@
   file: path=/var/www/cgi-bin/keystone state=directory
 
 - name: Install WSGI components
-  copy: src=var/www/cgi-bin/keystone/stub dest=/var/www/cgi-bin/keystone/admin
-  copy: src=var/www/cgi-bin/keystone/stub dest=/var/www/cgi-bin/keystone/main
+  copy: src=wsgi-keystone.admin dest=/var/www/cgi-bin/keystone/admin
+  copy: src=wsgi-keystone.main dest=/var/www/cgi-bin/keystone/main
 
 - name: Adjust ownership
   file: path=/var/www/cgi-bin/keystone/admin owner={{ keystone_user }} group={{keystone_group }} mode=0755 

@@ -7,5 +7,4 @@
     - answer_file.yml
  
   roles:
-    - common
     - sql

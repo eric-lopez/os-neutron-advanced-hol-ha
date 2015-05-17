@@ -8,13 +8,16 @@
   template: src=etc/network/interfaces.j2 dest=/etc/network/interfaces backup=yes
   notify: restart networking
 
-#update keepalived
 - name: update keepalived config
   template: src=etc/keepalived/keepalived.conf.j2 dest=/etc/keepalived/keepalived.conf owner=root group=root backup=yes
+
+- name: force restart
+  command: echo ""
+  notify: restart keepalived 
 
 - name: update update haproxy.cfg
   template: src=etc/haproxy/haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg owner=root group=root backup=yes
 
 - name: force restart
   command: echo ""
-  notify: restart LB services
+  notify: restart haproxy 

@@ -13,9 +13,9 @@
 # 'localhost' needs to be the last item for idempotency, see
 # http://ansible.cc/docs/modules.html#mysql-user   
 - name: Change root user password on first run
-  mysql_user: login_user=root
+  mysql_user: login_user={{ mysql_root_user }}
               login_password=''
-              name=root
+              name={{ mysql_root_user }}
               password={{ mysql_root_password }}
               priv=*.*:ALL,GRANT
               host={{ item }}

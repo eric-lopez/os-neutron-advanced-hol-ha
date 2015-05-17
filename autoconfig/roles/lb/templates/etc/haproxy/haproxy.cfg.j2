@@ -27,7 +27,7 @@ defaults
 
 listen keystone
         bind {{ internalVIP }}:5000
-        bind {{ publicVIP }}:5000 ssl crt /etc/ssl/os-neutron-lab
+        bind {{ publicVIP }}:5000 ssl crt /etc/ssl/os-neutron-lab.pem
         option http-server-close
         option  httplog
         fullconn 1024
@@ -45,7 +45,7 @@ listen keystone-admin
 
 listen glance-api
         bind {{ internalVIP }}:9292
-        bind {{ publicVIP }}:9292 ssl crt /etc/ssl/os-neutron-lab
+        bind {{ publicVIP }}:9292 ssl crt /etc/ssl/os-neutron-lab.pem
         balance source
         option httplog
         option http-server-close
@@ -64,7 +64,7 @@ listen glance-registry
 
 listen nova-compute-api
         bind {{ internalVIP }}:8774 
-        bind {{ publicVIP }}:8774 ssl crt /etc/ssl/os-neutron-lab
+        bind {{ publicVIP }}:8774 ssl crt /etc/ssl/os-neutron-lab.pem
         balance roundrobin
         option httplog
         option http-server-close
@@ -82,7 +82,7 @@ listen nova-metadata
         server {{ controller02hostName }} {{ controller02InternalIP }}:8775 check inter 3000
 
 listen novncproxy
-        bind {{ publicVIP }}:6080 ssl crt /etc/ssl/os-neutron-lab
+        bind {{ publicVIP }}:6080 ssl crt /etc/ssl/os-neutron-lab.pem
         balance source
         option httplog
         option http-server-close
@@ -92,7 +92,7 @@ listen novncproxy
 
 listen horizon
         bind {{ publicVIP }}:80
-        bind {{ publicVIP }}:443 ssl crt /etc/ssl/os-neutron-lab
+        bind {{ publicVIP }}:443 ssl crt /etc/ssl/os-neutron-lab.pem
         redirect scheme https if !{ ssl_fc }
         balance source
         option httplog

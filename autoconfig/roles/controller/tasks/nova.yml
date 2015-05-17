@@ -1,7 +1,7 @@
 - name: Configure nova
   template: src=etc/nova/nova.conf.j2 dest=/etc/nova/nova.conf
 
-- name: Perform a Keystone DB sync
+- name: Perform a Nova DB sync
   command: nova-manage db_sync
 
 - name: Restart Nova Services
@@ -12,5 +12,5 @@
   service: name=nova-conductor state=restarted
   service: name=nova-novncproxy state=restarted
 
-- name: remove SQLite DB
+- name: remove Nova SQLite DB
   file: path=/var/lib/nova/nova.sqlite state=absent

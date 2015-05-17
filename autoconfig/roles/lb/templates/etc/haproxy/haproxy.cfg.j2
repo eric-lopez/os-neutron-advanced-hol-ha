@@ -81,6 +81,16 @@ listen nova-metadata
         server {{ controller01hostName }} {{ controller01InternalIP }}:8775 check inter 3000
         server {{ controller02hostName }} {{ controller02InternalIP }}:8775 check inter 3000
 
+listen neutron
+	bind {{ internalVIP }}:9696
+	bind {{ publicVIP }}:9696 ssl crt /etc/ssl/os-neutron-lab.pem
+        balance source
+        option http-server-close
+        option httplog
+        fullconn 1024
+        server {{ network01hostName }} {{ network01InternalIP }}:9696 check inter 3000
+        server {{ network02hostName }} {{ network02InternalIP }}:9696 check inter 3000
+
 listen novncproxy
         bind {{ publicVIP }}:6080 ssl crt /etc/ssl/os-neutron-lab.pem
         balance source

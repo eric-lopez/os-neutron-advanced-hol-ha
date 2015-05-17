@@ -9,5 +9,5 @@
   service: name=glance-registry state=restarted
   service: name=glance-api state=restarted
 
-- name: remove SQLite DB
+- name: remove Nova SQLite DB
   file: path=/var/lib/glance/glance.sqlite state=absent

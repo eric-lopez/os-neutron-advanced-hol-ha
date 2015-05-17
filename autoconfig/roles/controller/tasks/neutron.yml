@@ -1,0 +1,8 @@
+- name: Configure neutron
+  template: src=etc/neutron/neutron.conf.j2 dest=/etc/neutron/neutron.conf owner=root group=neutron mode=0640 
+
+- name: Perform a Keystone DB sync
+  command: neutron-manage db_sync
+
+- name: remove SQLite DB
+  file: path=/var/lib/neutron/neutron.sqlite state=absent

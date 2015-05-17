@@ -9,7 +9,6 @@
 - name: remove the MySQL test database
   action: mysql_db db=test state=absent
    
-   
 # 'localhost' needs to be the last item for idempotency, see
 # http://ansible.cc/docs/modules.html#mysql-user   
 - name: Change root user password on first run
@@ -21,6 +20,7 @@
               host={{ item }}
   with_items:
     - "{{ ansible_hostname }}"
+    - "{{ ansible_eth0.ipv4.address }}"
     - 127.0.0.1
     - ::1
     - localhost

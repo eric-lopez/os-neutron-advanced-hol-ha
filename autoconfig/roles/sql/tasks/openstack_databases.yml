@@ -1,0 +1,87 @@
+- name: Create DB for keystone service
+  mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ keystone_database }}"
+    state: "present"
+
+- name: Grant access to the DB for the keystone service
+  mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ keystone_user }}"
+    password: "{{ keystone_db_password }}"
+    host: "{{ item }}"
+    state: "present"
+    priv: "{{ keystone_database }}.*:ALL"
+  with_items:
+    - "localhost"
+    - "%"
+
+- name: Create DB for glance service
+  mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ glance_database }}"
+    state: "present"
+
+- name: Grant access to the DB for the glance service
+  mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ glance_user }}"
+    password: "{{ glance_db_password }}"
+    host: "{{ item }}"
+    state: "present"
+    priv: "{{ glance_database }}.*:ALL"
+  with_items:
+    - "localhost"
+    - "%"
+
+- name: Create DB for nova service
+  mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ nova_database }}"
+    state: "present"
+
+- name: Grant access to the DB for the nova service
+  mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ nova_user }}"
+    password: "{{ nova_db_password }}"
+    host: "{{ item }}"
+    state: "present"
+    priv: "{{ nova_database }}.*:ALL"
+  with_items:
+    - "localhost"
+    - "%"
+
+- name: Create DB for neutron service
+  mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ neutron_database }}"
+    state: "present"
+
+- name: Grant access to the DB for the neutron service
+  mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ mysql_address }}"
+    name: "{{ neutron_user }}"
+    password: "{{ neutron_db_password }}"
+    host: "{{ item }}"
+    state: "present"
+    priv: "{{ neutron_database }}.*:ALL"
+  with_items:
+    - "localhost"
+    - "%"
